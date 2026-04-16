@@ -1,5 +1,9 @@
 const express = require('express');
 const { createCanvas, loadImage } = require('canvas');
+const bingo = require('./bingo/game');
+
+const app = bingo();
+
 const app = express();
 
 app.get('/card', async (req, res) => {
