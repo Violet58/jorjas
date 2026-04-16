@@ -2,8 +2,6 @@ const express = require('express');
 const { createCanvas, loadImage } = require('canvas');
 const bingo = require('./bingo/game');
 
-const app = bingo();
-
 const app = express();
 
 app.get('/card', async (req, res) => {
@@ -94,3 +92,48 @@ app.get('/card', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Card ultra colorido online na porta ${PORT}`));
+
+// bingo
+client.on('messageCreate', async (msg) => {
+  if (msg.author.bot) return;
+
+  // 🎮 iniciar bingo
+  if (msg.content === '!bingo start') {
+    bingo.iniciarBingo();
+    msg.channel.send('🎉 Bingo iniciado!');
+  }
+
+  // 🎟️ entrar no bingo
+  if (msg.content === '!bingo entrar') {
+
+    const { gerarImagem } = require('./bingo/renderCartela');
+
+    const player = bingo.entrar(msg.author.id);
+
+    if (!player) {
+      return msg.reply('❌ Não tem bingo ativo!');
+    }
+
+    const buffer = await gerarImagem(
+      player.cartela,
+      player.marcados,
+      player.tema
+    );
+
+    msg.reply({
+      content: '🎟️ Aqui está sua cartela!',
+      files: [{ attachment: buffer, name: 'cartela.png' }]
+    });
+  }
+
+  // 🎲 sortear número
+  if (msg.content === '!bingo sortear') {
+    const numero = bingo.sortear();
+
+    if (!numero) {
+      return msg.reply('❌ Bingo não iniciado!');
+    }
+
+    msg.channel.send(`🎲 Número sorteado: **${numero}**`);
+  }
+});
