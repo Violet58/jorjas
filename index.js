@@ -135,9 +135,9 @@ if (msg.content === '!bingo entrar') {
     });
 
   } catch (err) {
-    console.error(err);
-    msg.reply('💀 Deu erro ao gerar a cartela!');
-  }
+  console.error('ERRO COMPLETO CARTELA:', err);
+  msg.reply('💀 Deu erro ao gerar a cartela!');
+                                  }
 }
   // 🎲 sortear número
   if (msg.content === '!bingo sortear') {
