@@ -113,7 +113,7 @@ client.on('messageCreate', async (msg) => {
   }
 
   // 🎟️ entrar no bingo
-if (msg.content === '!bingo entrar') {
+app.get('/bingo/entrar', async (req, res) => {
   try {
     const { gerarImagem } = require('./bingo/renderCartela');
 
