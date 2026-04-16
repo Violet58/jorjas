@@ -148,3 +148,4 @@ client.on('messageCreate', async (msg) => {
 });
 
 client.login(process.env.TOKEN);
+console.log("TOKEN:", process.env.TOKEN);
