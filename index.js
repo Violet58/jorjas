@@ -113,8 +113,8 @@ client.on('messageCreate', async (msg) => {
   }
 
   // 🎟️ entrar no bingo
-  if (msg.content === '!bingo entrar') {
-
+if (msg.content === '!bingo entrar') {
+  try {
     const { gerarImagem } = require('./bingo/renderCartela');
 
     const player = bingo.entrar(msg.author.id);
@@ -133,8 +133,12 @@ client.on('messageCreate', async (msg) => {
       content: '🎟️ Aqui está sua cartela!',
       files: [{ attachment: buffer, name: 'cartela.png' }]
     });
-  }
 
+  } catch (err) {
+    console.error(err);
+    msg.reply('💀 Deu erro ao gerar a cartela!');
+  }
+}
   // 🎲 sortear número
   if (msg.content === '!bingo sortear') {
     const numero = bingo.sortear();
