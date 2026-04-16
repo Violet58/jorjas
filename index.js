@@ -1,6 +1,15 @@
+const { Client, GatewayIntentBits } = require('discord.js');
 const express = require('express');
 const { createCanvas, loadImage } = require('canvas');
 const bingo = require('./bingo/game');
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
+});
 
 const app = express();
 
@@ -137,3 +146,5 @@ client.on('messageCreate', async (msg) => {
     msg.channel.send(`🎲 Número sorteado: **${numero}**`);
   }
 });
+
+client.login(process.env.TOKEN);
