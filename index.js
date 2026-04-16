@@ -150,6 +150,3 @@ if (msg.content === '!bingo entrar') {
     msg.channel.send(`🎲 Número sorteado: **${numero}**`);
   }
 });
-
-client.login(process.env.TOKEN);
-console.log("TOKEN:", process.env.TOKEN);
