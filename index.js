@@ -106,21 +106,16 @@ app.listen(PORT, () => console.log(`Card ultra colorido online na porta ${PORT}`
 client.on('messageCreate', async (msg) => {
   if (msg.author.bot) return;
 
-  // 🎮 iniciar bingo
-  if (msg.content === '!bingo start') {
-    bingo.iniciarBingo();
-    msg.channel.send('🎉 Bingo iniciado!');
-  }
-
-  // 🎟️ entrar no bingo
+// 🎟️ entrar no bingo (gera cartela)
 app.get('/bingo/entrar', async (req, res) => {
   try {
-    const { gerarImagem } = require('./bingo/renderCartela');
+    const userId = req.query.user;
+    const tema = req.query.tema || 'default';
 
-    const player = bingo.entrar(msg.author.id);
+    const player = bingo.entrar(userId, tema);
 
     if (!player) {
-      return msg.reply('❌ Não tem bingo ativo!');
+      return res.status(400).send('❌ Não tem bingo ativo!');
     }
 
     const buffer = await gerarImagem(
@@ -129,24 +124,65 @@ app.get('/bingo/entrar', async (req, res) => {
       player.tema
     );
 
-    msg.reply({
-      content: '🎟️ Aqui está sua cartela!',
-      files: [{ attachment: buffer, name: 'cartela.png' }]
-    });
+    res.setHeader('Content-Type', 'image/png');
+    res.send(buffer);
 
   } catch (err) {
-  console.error('ERRO COMPLETO CARTELA:', err);
-  msg.reply('💀 Deu erro ao gerar a cartela!');
-                                  }
-}
-  // 🎲 sortear número
-  if (msg.content === '!bingo sortear') {
-    const numero = bingo.sortear();
-
-    if (!numero) {
-      return msg.reply('❌ Bingo não iniciado!');
-    }
-
-    msg.channel.send(`🎲 Número sorteado: **${numero}**`);
+    console.error('ERRO CARTELA:', err);
+    res.status(500).send('💀 Erro ao gerar cartela');
   }
 });
+
+          /* =========================
+   🚀 START
+========================= */
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🌐 API Bingo online na porta ${PORT}`);
+});
+
+client.login(process.env.TOKEN);
+
+          const { createCanvas, loadImage } = require('canvas');
+
+async function gerarImagem(cartela, marcados, tema) {
+  const base = await loadImage(`./assets/cartelas/${tema}.png`);
+  const stamp = await loadImage(`./assets/stamps/${tema}.png`);
+
+  const mapa = require(`./maps/${tema}.js`);
+
+  const canvas = createCanvas(base.width, base.height);
+  const ctx = canvas.getContext('2d');
+
+  // 🎟️ fundo
+  ctx.drawImage(base, 0, 0);
+
+  // 🔴 carimbos nos números marcados
+  marcados.forEach(num => {
+    const pos = mapa[num];
+
+    if (pos) {
+      ctx.drawImage(stamp, pos.x, pos.y, 40, 40);
+    }
+  });
+
+  return canvas.toBuffer();
+}
+
+module.exports = { gerarImagem };
+
+          module.exports = {
+  1: { x: 50, y: 120 },
+  2: { x: 120, y: 120 },
+  3: { x: 190, y: 120 },
+  4: { x: 260, y: 120 },
+  5: { x: 330, y: 120 },
+
+  6: { x: 50, y: 180 },
+  7: { x: 120, y: 180 },
+  8: { x: 190, y: 180 },
+  9: { x: 260, y: 180 },
+  10: { x: 330, y: 180 },
+};
