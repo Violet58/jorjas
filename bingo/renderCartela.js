@@ -1,39 +1,12 @@
-const { createCanvas, loadImage } = require('canvas');
-
-async function gerarImagem(cartela, marcados = [], tema) {
-  const canvas = createCanvas(500, 500);
-  const ctx = canvas.getContext('2d');
-
-  const fundo = await loadImage(`./assets/${tema}.png`);
-  const carimbo = await loadImage(`./assets/${tema}_carimbo.png`);
-
-  ctx.drawImage(fundo, 0, 0, 500, 500);
-
-  // 🔥 POSIÇÕES (VAMOS AJUSTAR DEPOIS)
-  let index = 0;
-
-  for (let y = 0; y < 5; y++) {
-    for (let x = 0; x < 5; x++) {
-
-      let posX = 50 + x * 80;
-      let posY = 50 + y * 80;
-
-      const numero = cartela[index];
-
-      ctx.fillStyle = "#000";
-      ctx.font = "20px Arial";
-      ctx.fillText(numero, posX, posY);
-
-      // 🔴 carimbo
-      if (marcados.includes(numero)) {
-        ctx.drawImage(carimbo, posX - 20, posY - 20, 50, 50);
-      }
-
-      index++;
-    }
-  }
-
-  return canvas.toBuffer();
-}
-
-module.exports = { gerarImagem };
+module.exports = {
+  1: { x: 50, y: 120 },
+  2: { x: 120, y: 120 },
+  3: { x: 190, y: 120 },
+  4: { x: 260, y: 120 },
+  5: { x: 330, y: 120 },
+  6: { x: 50, y: 180 },
+  7: { x: 120, y: 180 },
+  8: { x: 190, y: 180 },
+  9: { x: 260, y: 180 },
+  10: { x: 330, y: 180 }
+};
