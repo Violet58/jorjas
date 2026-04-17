@@ -104,15 +104,19 @@ app.get('/card', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 // bingo
+/* =========================
+   🎟️ ENTRAR NO BINGO
+========================= */
+
 app.get('/bingo/entrar', async (req, res) => {
   try {
     const userId = req.query.user;
-    const tema = req.query.tema || 'default';
+    const tema = req.query.tema || 'power';
 
     const player = bingo.entrar(userId, tema);
 
     if (!player) {
-      return res.status(400).send('❌ Não tem bingo ativo!');
+      return res.status(400).send('❌ Bingo não ativo!');
     }
 
     const buffer = await gerarImagem(
@@ -124,15 +128,13 @@ app.get('/bingo/entrar', async (req, res) => {
     res.setHeader('Content-Type', 'image/png');
     res.send(buffer);
 
-} catch (err) {
-    console.log("💀 ERRO COMPLETO:");
+  } catch (err) {
+    console.log("💀 ERRO:");
     console.log(err);
-    console.log("TEMA:", tema);
-    console.log("USER:", userId);
-
-    res.status(500).send("💀 Erro ao gerar cartela");
+    res.status(500).send("Erro ao gerar cartela");
   }
 });
+
 /* =========================
    🤖 DISCORD BOT
 ========================= */
@@ -155,9 +157,11 @@ client.on('messageCreate', async (msg) => {
 /* =========================
    🚀 START
 ========================= */
+
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`🌐 Servidor online na porta ${PORT}`);
-  console.log(`🎴 Card + Bingo API rodando!`);
+  console.log(`🌐 Bingo API rodando na porta ${PORT}`);
 });
 
 client.login(process.env.TOKEN);
