@@ -124,13 +124,15 @@ app.get('/bingo/entrar', async (req, res) => {
     res.setHeader('Content-Type', 'image/png');
     res.send(buffer);
 
-  } catch (err) {
-  console.log("💀 ERRO COMPLETO:");
-  console.log(err);
-  console.log("TEMA:", tema);
-  console.log("USER:", userId);
-  }
+} catch (err) {
+    console.log("💀 ERRO COMPLETO:");
+    console.log(err);
+    console.log("TEMA:", tema);
+    console.log("USER:", userId);
 
+    res.status(500).send("💀 Erro ao gerar cartela");
+  }
+});
 /* =========================
    🤖 DISCORD BOT
 ========================= */
