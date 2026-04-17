@@ -125,10 +125,11 @@ app.get('/bingo/entrar', async (req, res) => {
     res.send(buffer);
 
   } catch (err) {
-    console.error('ERRO CARTELA:', err);
-    res.status(500).send('💀 Erro ao gerar cartela');
+  console.log("💀 ERRO COMPLETO:");
+  console.log(err);
+  console.log("TEMA:", tema);
+  console.log("USER:", userId);
   }
-});
 
 /* =========================
    🤖 DISCORD BOT
