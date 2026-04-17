@@ -4,7 +4,9 @@ async function gerarImagem(cartela, marcados, tema) {
   const base = await loadImage(`./assets/${tema}.png`);
   const stamp = await loadImage(`./assets/${tema}_carimbo.png`);
 
-  const mapa = require(`./bingo/maps/default.js`);
+  const path = require('path');
+
+const mapa = require(path.join(__dirname, 'maps', 'default.js'));
 
   const canvas = createCanvas(base.width, base.height);
   const ctx = canvas.getContext('2d');
