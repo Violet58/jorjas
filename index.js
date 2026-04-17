@@ -102,7 +102,6 @@ app.get('/card', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Card ultra colorido online na porta ${PORT}`));
 
 // bingo
 app.get('/bingo/entrar', async (req, res) => {
@@ -153,9 +152,9 @@ client.on('messageCreate', async (msg) => {
 /* =========================
    🚀 START
 ========================= */
-
 app.listen(PORT, () => {
-  console.log(`🌐 API Bingo online na porta ${PORT}`);
+  console.log(`🌐 Servidor online na porta ${PORT}`);
+  console.log(`🎴 Card + Bingo API rodando!`);
 });
 
 client.login(process.env.TOKEN);
