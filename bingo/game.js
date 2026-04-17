@@ -3,6 +3,9 @@
 const { createCanvas, loadImage } = require('canvas');
 
 async function gerarImagem(cartela, marcados, tema) {
+  console.log("CARREGANDO:", `./assets/${tema}.png`);
+console.log("CARREGANDO STAMP:", `./assets/${tema}_carimbo.png`);
+console.log("MAPA:", `./maps/${tema}.js`);
   const base = await loadImage(`./assets/${tema}.png`);
   const stamp = await loadImage(`./assets/${tema}_carimbo.png`);
   const mapa = require(`./maps/${tema}.js`);
