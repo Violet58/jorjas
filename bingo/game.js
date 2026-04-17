@@ -17,8 +17,6 @@ const cartelasDisponiveis = [
   "g"
 ];
 
-const cartelasUsadas = [];
-
 function iniciarBingo() {
   bingoAtivo = true;
   Object.keys(jogadores).forEach(k => delete jogadores[k]);
