@@ -1,28 +1,58 @@
 // bingo/game.js
 
-const { createCanvas, loadImage } = require('canvas');
+let bingoAtivo = false;
+let jogadores = {};
+let numerosSorteados = [];
 
-async function gerarImagem(cartela, marcados, tema) {
-  console.log("CARREGANDO:", `./assets/${tema}.png`);
-console.log("CARREGANDO STAMP:", `./assets/${tema}_carimbo.png`);
-console.log("MAPA:", `./maps/${tema}.js`);
-  const base = await loadImage(`./assets/${tema}.png`);
-  const stamp = await loadImage(`./assets/${tema}_carimbo.png`);
-  const mapa = require(`./maps/${tema}.js`);
+function iniciarBingo() {
+  bingoAtivo = true;
+  jogadores = {};
+  numerosSorteados = [];
+}
 
-  const canvas = createCanvas(base.width, base.height);
-  const ctx = canvas.getContext('2d');
+function entrar(userId, tema = 'power') {
+  if (!bingoAtivo) return null;
 
-  ctx.drawImage(base, 0, 0);
+  if (!jogadores[userId]) {
+    jogadores[userId] = {
+      userId,
+      tema,
+      cartela: gerarCartela(),
+      marcados: []
+    };
+  }
 
-  marcados.forEach(num => {
-    const pos = mapa[num];
-    if (pos) {
-      ctx.drawImage(stamp, pos.x, pos.y, 40, 40);
+  return jogadores[userId];
+}
+
+// cria cartela simples (1-75)
+function gerarCartela() {
+  const nums = [];
+  while (nums.length < 25) {
+    const n = Math.floor(Math.random() * 75) + 1;
+    if (!nums.includes(n)) nums.push(n);
+  }
+  return nums;
+}
+
+function sortear() {
+  if (!bingoAtivo) return null;
+
+  const n = Math.floor(Math.random() * 75) + 1;
+  numerosSorteados.push(n);
+
+  // marca nos jogadores
+  Object.values(jogadores).forEach(j => {
+    if (j.cartela.includes(n)) {
+      j.marcados.push(n);
     }
   });
 
-  return canvas.toBuffer();
+  return n;
 }
 
-module.exports = { gerarImagem };
+module.exports = {
+  iniciarBingo,
+  entrar,
+  sortear
+};
