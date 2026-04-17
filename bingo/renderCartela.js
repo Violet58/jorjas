@@ -1,12 +1,26 @@
-module.exports = {
-  1: { x: 50, y: 120 },
-  2: { x: 120, y: 120 },
-  3: { x: 190, y: 120 },
-  4: { x: 260, y: 120 },
-  5: { x: 330, y: 120 },
-  6: { x: 50, y: 180 },
-  7: { x: 120, y: 180 },
-  8: { x: 190, y: 180 },
-  9: { x: 260, y: 180 },
-  10: { x: 330, y: 180 }
-};
+const { createCanvas, loadImage } = require('canvas');
+
+async function gerarImagem(cartela, marcados, tema) {
+  const base = await loadImage(`./assets/${tema}.png`);
+  const stamp = await loadImage(`./assets/${tema}_carimbo.png`);
+
+  const mapa = require(`./bingo/maps/default.js`);
+
+  const canvas = createCanvas(base.width, base.height);
+  const ctx = canvas.getContext('2d');
+
+  // fundo
+  ctx.drawImage(base, 0, 0);
+
+  // carimbos
+  marcados.forEach(num => {
+    const pos = mapa[num];
+    if (pos) {
+      ctx.drawImage(stamp, pos.x, pos.y, 40, 40);
+    }
+  });
+
+  return canvas.toBuffer();
+}
+
+module.exports = { gerarImagem };
