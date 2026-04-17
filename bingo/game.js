@@ -1,47 +1,74 @@
-// bingo/game.js
+const MAX_PLAYERS = 9;
 
 let bingoAtivo = false;
-let jogadores = {};
-let numerosSorteados = [];
+
+const jogadores = {};
+const cartelasUsadas = [];
+
+const cartelasDisponiveis = [
+  "power",
+  "sally_face",
+  "omori",
+  "fnf",
+  "fnf2",
+  "hello_kitty",
+  "denji",
+  "poppy_playtime",
+  "g"
+];
+
+const cartelasUsadas = [];
 
 function iniciarBingo() {
   bingoAtivo = true;
-  jogadores = {};
-  numerosSorteados = [];
+  Object.keys(jogadores).forEach(k => delete jogadores[k]);
+  cartelasUsadas.length = 0;
 }
 
-function entrar(userId, tema = 'power') {
+function pegarCartelaAleatoria() {
+  const restantes = cartelasDisponiveis.filter(c => !cartelasUsadas.includes(c));
+
+  if (restantes.length === 0) {
+    return null; // acabou pool
+  }
+
+  const escolha = restantes[Math.floor(Math.random() * restantes.length)];
+  cartelasUsadas.push(escolha);
+
+  return escolha;
+}
+
+function entrar(userId) {
   if (!bingoAtivo) return null;
 
-  if (!jogadores[userId]) {
-    jogadores[userId] = {
-      userId,
-      tema,
-      cartela: gerarCartela(),
-      marcados: []
-    };
+  // já tem cartela
+  if (jogadores[userId]) {
+    return jogadores[userId];
   }
 
-  return jogadores[userId];
-}
+  const tema = pegarCartelaAleatoria();
 
-// cria cartela simples (1-75)
-function gerarCartela() {
-  const nums = [];
-  while (nums.length < 25) {
-    const n = Math.floor(Math.random() * 75) + 1;
-    if (!nums.includes(n)) nums.push(n);
+  if (!tema) {
+    return null; // sem cartelas
   }
-  return nums;
+
+  const player = {
+    userId,
+    tema,
+    cartela: [], // se você quiser manter números também
+    marcados: []
+  };
+
+  jogadores[userId] = player;
+
+  return player;
 }
 
 function sortear() {
   if (!bingoAtivo) return null;
 
   const n = Math.floor(Math.random() * 75) + 1;
-  numerosSorteados.push(n);
 
-  // marca nos jogadores
   Object.values(jogadores).forEach(j => {
     if (j.cartela.includes(n)) {
       j.marcados.push(n);
