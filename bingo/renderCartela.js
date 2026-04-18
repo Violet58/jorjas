@@ -7,29 +7,42 @@ async function gerarImagem(cartela, marcados, tema) {
 
   const path = require('path');
 
-const mapa = require(path.join(__dirname, 'maps', 'default.js'));
-
   const canvas = createCanvas(base.width, base.height);
   const ctx = canvas.getContext('2d');
 
   // fundo
   ctx.drawImage(base, 0, 0);
 
-  const cols = 5;
+// 🔢 CONFIG GRID
+const cols = 5;
 const rows = 5;
 
-const startX = 50;   // ajuste fino
-const startY = 50;   // ajuste fino
-const cellW = 100;   // largura de cada quadrado
-const cellH = 100;   // altura de cada quadrado
+const startX = 100;
+const startY = 100;
+const gap = 100;
 
+// 🎯 CENTROS DOS QUADRADOS
+const centers = [];
+
+for (let row = 0; row < rows; row++) {
+  for (let col = 0; col < cols; col++) {
+    centers.push({
+      x: startX + col * gap,
+      y: startY + row * gap
+    });
+  }
+}
+
+// 🔤 TEXTO
 ctx.fillStyle = '#000';
-ctx.font = 'bold 28px Arial';
+ctx.font = '28px sans-serif'; // ⚠️ melhor que Arial no Render
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
+// 🔢 DESENHAR NÚMEROS
 cartela.forEach((num, i) => {
   const pos = centers[i];
+  if (!pos) return;
 
   ctx.fillText(num.toString(), pos.x, pos.y);
 });
@@ -42,10 +55,10 @@ cartela.forEach((num, i) => {
   const col = index % cols;
   const row = Math.floor(index / cols);
 
-  const x = startX + col * cellW;
-  const y = startY + row * cellH;
+  const pos = centers[index];
+if (!pos) return;
 
-  ctx.drawImage(stamp, x, y, cellW, cellH);
+ctx.drawImage(stamp, pos.x - 40, pos.y - 40, 80, 80);
 });
 
   return canvas.toBuffer();
