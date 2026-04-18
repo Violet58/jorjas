@@ -34,8 +34,8 @@ for (let row = 0; row < rows; row++) {
 }
 
 // 🔤 TEXTO
-ctx.fillStyle = '#000';
-ctx.font = '28px sans-serif'; // ⚠️ melhor que Arial no Render
+ctx.fillStyle = '#111';
+ctx.font = '100px sans-serif'; // ⚠️ melhor que Arial no Render
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
