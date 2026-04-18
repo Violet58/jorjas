@@ -19,7 +19,7 @@ const rows = 4;
 
 const startX = 410;
 const startY = 410;
-const gap = 410;
+const gap = 430;
 
 // 🎯 CENTROS DOS QUADRADOS
 const centers = [];
