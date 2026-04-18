@@ -17,9 +17,9 @@ async function gerarImagem(cartela, marcados, tema) {
 const cols = 5;
 const rows = 5;
 
-const startX = 100;
-const startY = 100;
-const gap = 100;
+const startX = 300;
+const startY = 300;
+const gap = 300;
 
 // 🎯 CENTROS DOS QUADRADOS
 const centers = [];
