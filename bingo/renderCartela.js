@@ -1,6 +1,7 @@
 const { createCanvas, loadImage } = require('canvas');
 
 async function gerarImagem(cartela, marcados, tema) {
+  console.log("CARTELA:", cartela);
   const base = await loadImage(`./assets/${tema}.png`);
   const stamp = await loadImage(`./assets/${tema}_carimbo.png`);
 
@@ -55,5 +56,3 @@ cartela.forEach((num, i) => {
 }
 
 module.exports = { gerarImagem };
-
-console.log("CARTELA:", cartela);
