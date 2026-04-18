@@ -17,9 +17,9 @@ async function gerarImagem(cartela, marcados, tema) {
 const cols = 5;
 const rows = 5;
 
-const startX = 400;
-const startY = 400;
-const gap = 400;
+const startX = 410;
+const startY = 410;
+const gap = 410;
 
 // 🎯 CENTROS DOS QUADRADOS
 const centers = [];
@@ -34,8 +34,8 @@ for (let row = 0; row < rows; row++) {
 }
 
 // 🔤 TEXTO
-ctx.fillStyle = '#111';
-ctx.font = '100px sans-serif'; // ⚠️ melhor que Arial no Render
+ctx.fillStyle = '#000';
+ctx.font = '200px sans-serif'; // ⚠️ melhor que Arial no Render
 ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
