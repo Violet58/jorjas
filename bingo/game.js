@@ -1,3 +1,17 @@
+function gerarCartela() {
+  const nums = [];
+
+  while (nums.length < 25) {
+    const n = Math.floor(Math.random() * 75) + 1;
+
+    if (!nums.includes(n)) {
+      nums.push(n);
+    }
+  }
+
+  return nums;
+}
+
 const MAX_PLAYERS = 9;
 
 let bingoAtivo = false;
@@ -48,20 +62,6 @@ function entrar(userId) {
 
   if (!tema) {
     return null; // sem cartelas
-  }
-
-  function gerarCartela() {
-  const nums = [];
-
-  while (nums.length < 25) {
-    const n = Math.floor(Math.random() * 75) + 1;
-
-    if (!nums.includes(n)) {
-      nums.push(n);
-    }
-  }
-
-  return nums;
   }
 
   const player = {
