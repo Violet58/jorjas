@@ -44,8 +44,19 @@ cartela.forEach((num, i) => {
   const pos = centers[i];
   if (!pos) return;
 
-  ctx.fillText(num.toString(), pos.x, pos.y);
-});
+  const text = num.toString();
+
+// 🖤 borda preta
+ctx.strokeStyle = '#000';
+ctx.lineWidth = 3;
+ctx.strokeText(text, pos.x, pos.y);
+
+// 🤍 número branco
+ctx.fillStyle = '#fff';
+ctx.fillText(text, pos.x, pos.y);
+
+  ctx.shadowColor = '#000';
+ctx.shadowBlur = 5;
 
   // carimbos
   marcados.forEach((num, i) => {
