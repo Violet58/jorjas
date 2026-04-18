@@ -55,3 +55,5 @@ cartela.forEach((num, i) => {
 }
 
 module.exports = { gerarImagem };
+
+console.log("CARTELA:", cartela);
