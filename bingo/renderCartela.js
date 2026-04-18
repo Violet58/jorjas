@@ -14,13 +14,42 @@ const mapa = require(path.join(__dirname, 'maps', 'default.js'));
   // fundo
   ctx.drawImage(base, 0, 0);
 
+  const cols = 5;
+const rows = 5;
+
+const startX = 50;   // ajuste fino
+const startY = 50;   // ajuste fino
+const cellW = 100;   // largura de cada quadrado
+const cellH = 100;   // altura de cada quadrado
+
+ctx.fillStyle = '#000';
+ctx.font = 'bold 28px Arial';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+
+cartela.forEach((num, i) => {
+  const col = i % cols;
+  const row = Math.floor(i / cols);
+
+  const x = startX + col * cellW + cellW / 2;
+  const y = startY + row * cellH + cellH / 2;
+
+  ctx.fillText(num.toString(), x, y);
+});
+
   // carimbos
-  marcados.forEach(num => {
-    const pos = mapa[num];
-    if (pos) {
-      ctx.drawImage(stamp, pos.x, pos.y, 40, 40);
-    }
-  });
+  marcados.forEach((num, i) => {
+  const index = cartela.indexOf(num);
+  if (index === -1) return;
+
+  const col = index % cols;
+  const row = Math.floor(index / cols);
+
+  const x = startX + col * cellW;
+  const y = startY + row * cellH;
+
+  ctx.drawImage(stamp, x, y, cellW, cellH);
+});
 
   return canvas.toBuffer();
 }
