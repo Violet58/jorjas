@@ -50,10 +50,24 @@ function entrar(userId) {
     return null; // sem cartelas
   }
 
+  function gerarCartela() {
+  const nums = [];
+
+  while (nums.length < 25) {
+    const n = Math.floor(Math.random() * 75) + 1;
+
+    if (!nums.includes(n)) {
+      nums.push(n);
+    }
+  }
+
+  return nums;
+  }
+
   const player = {
     userId,
     tema,
-    cartela: [], // se você quiser manter números também
+    cartela: gerarCartela(), // se você quiser manter números também
     marcados: []
   };
 
