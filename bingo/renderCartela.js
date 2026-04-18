@@ -29,13 +29,9 @@ ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
 cartela.forEach((num, i) => {
-  const col = i % cols;
-  const row = Math.floor(i / cols);
+  const pos = centers[i];
 
-  const x = startX + col * cellW + cellW / 2;
-  const y = startY + row * cellH + cellH / 2;
-
-  ctx.fillText(num.toString(), x, y);
+  ctx.fillText(num.toString(), pos.x, pos.y);
 });
 
   // carimbos
