@@ -40,7 +40,7 @@ ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
 // 🔢 DESENHAR NÚMEROS
-cartela.forEach((num, i) => {
+cartela.forEach(num, i) => {
   const pos = centers[i];
   if (!pos) return;
 
