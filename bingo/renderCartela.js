@@ -14,8 +14,8 @@ async function gerarImagem(cartela, marcados, tema) {
   ctx.drawImage(base, 0, 0);
 
 // 🔢 CONFIG GRID
-const cols = 5;
-const rows = 5;
+const cols = 4;
+const rows = 4;
 
 const startX = 410;
 const startY = 410;
