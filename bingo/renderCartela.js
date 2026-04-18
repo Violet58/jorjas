@@ -48,7 +48,7 @@ cartela.forEach((num, i) => {
 
 // 🖤 borda preta
 ctx.strokeStyle = '#000';
-ctx.lineWidth = 3;
+ctx.lineWidth = 5;
 ctx.strokeText(text, pos.x, pos.y);
 
 // 🤍 número branco
