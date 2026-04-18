@@ -40,7 +40,7 @@ ctx.textAlign = 'center';
 ctx.textBaseline = 'middle';
 
 // 🔢 DESENHAR NÚMEROS
-cartela.forEach(num, i) => {
+cartela.forEach((num, i) => {
   const pos = centers[i];
   if (!pos) return;
 
@@ -54,6 +54,7 @@ ctx.strokeText(text, pos.x, pos.y);
 // 🤍 número branco
 ctx.fillStyle = '#fff';
 ctx.fillText(text, pos.x, pos.y);
+  });
 
   ctx.shadowColor = '#000';
 ctx.shadowBlur = 5;
